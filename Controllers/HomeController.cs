@@ -1,5 +1,6 @@
 ﻿using ClassTaskOf_June.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace ClassTaskOf_June.Controllers
@@ -26,7 +27,8 @@ namespace ClassTaskOf_June.Controllers
         }
         public IActionResult Index()
         {
-            var show = context.Products.ToList();
+            var show = context.Products.Include(options=> options.Category).ToList();
+            
             return View(show);
         }
         public IActionResult AddProduct()
@@ -34,7 +36,7 @@ namespace ClassTaskOf_June.Controllers
             ProductViewModel cat = new ProductViewModel()
             {
                 InsertProduct = new Product(),
-                Categories = context.ProductCategories.ToList()
+                Categoryp = context.ProductCategories.ToList()
 
             };
             return View(cat);
@@ -73,6 +75,7 @@ namespace ClassTaskOf_June.Controllers
                         ProductName = addPro.InsertProduct.ProductName,
                         ProductPrice = addPro.InsertProduct.ProductPrice,
                         Description = addPro.InsertProduct.Description,
+                        CategoryId = addPro.InsertProduct.CategoryId,
                         ProductImage = dbPath
                     };
                     context.Products.Add(data);
