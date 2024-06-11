@@ -1,4 +1,5 @@
 ﻿using ClassTaskOf_June.Models;
+using Humanizer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -9,22 +10,56 @@ namespace ClassTaskOf_June.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ClassTaskContext context;
+        private readonly IHttpContextAccessor accessor;
 
-        public HomeController(ILogger<HomeController> logger, ClassTaskContext context)
+        public HomeController(ILogger<HomeController> logger, ClassTaskContext context, IHttpContextAccessor accessor)
         {
             _logger = logger;
             this.context = context;
+            this.accessor = accessor;
         }
         public IActionResult Signup()
         {
-            return View();
+            UserReg role = new UserReg
+            {
+                UserRegView = new User(),
+                Roles = context.UserRoles.ToList()
+            };
+
+
+            return View(role);
         }
         
-        public IActionResult Signup(UserReg user)
+        public IActionResult Signup(UserReg custom)
         {
+            User suser = new User
+            {
+                UserName = custom.UserRegView.UserName,
+                UserEmail = custom.UserRegView.UserEmail,
+                UserPassword = custom.UserRegView.UserPassword,
+                Role = custom.UserRegView.Role
+            };
+            context.Add(suser);
+            context.SaveChanges();
+            return RedirectToAction("Login");
+           
+        }
 
+        public IActionResult Login()
+        {
             return View();
         }
+        [HttpPost]
+        public IActionResult Login(User custom)
+        {
+            var show = context.Users.Where(option => option.UserEmail == custom.UserEmail && option.UserPassword == custom.UserPassword).FirstOrDefault();
+            if (show != null){
+                var findRole = context.UserRoles.FirstOrDefault(option => option.RoleId == show.RoleId);
+            }
+         
+            return View();
+        }
+
         public IActionResult Index()
         {
             var show = context.Products.Include(options=> options.Category).ToList();

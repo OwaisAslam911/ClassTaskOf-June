@@ -3,56 +3,17 @@
 @{
     ViewData["Title"] = "Index";
 }
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="card col-lg-3 col-md-6 col-sm-12" style="width: 18rem;">
+            <img src="@Html.DisplayFor(modelItem => item.ProductImage)" class="card-img-top" alt="Product Image">
+            <div class="card-body">
+                <h5 class="card-title">@Html.DisplayFor(modelItem => item.ProductName)</h5>
+                <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
+                <a href="#" class="btn btn-primary">Add To Cart</a>
+            </div>
+        </div>
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductImage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                    @Html.DisplayFor(modelItem => item.ProductName)
-            </td>
-            <td>
-                    @Html.DisplayFor(modelItem => item.ProductPrice)
-            </td>
-            <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                    <img src="@Html.DisplayFor(modelItem => item.ProductImage)" width="100px" height="100px">
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.CategoryName)
-            </td>
-            <td>
-                    <a asp-action="Edit" asp-route-id="@item.ProductId">Add To Cart</a> |
-               
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    }
+</div>

@@ -1,0 +1,39 @@
+﻿@model ClassTaskOf_June.Models.UserReg
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Login</h1>
+
+<h4>User</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Login">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserRegView.UserEmail" class="control-label"></label>
+                <input asp-for="UserRegView.UserEmail" class="form-control" />
+                <span asp-validation-for="UserRegView.UserEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserRegView.UserPassword" class="control-label"></label>
+                <input asp-for="UserRegView.UserPassword" class="form-control" />
+                <span asp-validation-for="UserRegView.UserPassword" class="text-danger"></span>
+            </div>
+           
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Signup">Signup</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

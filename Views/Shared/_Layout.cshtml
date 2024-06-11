@@ -28,7 +28,22 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Cart">Cart</a>
                         </li>
+
+                        
                     </ul>
+                    <div class="d-flex">
+         @*                @if (Context.Session.GetString("mystring") != null)
+                        {
+                            <p style="color:red;display:flex;">Hello @Context.Session.GetString("mystring")</p>
+                            <a asp-controller="Home" asp-action="Logout" class="btn btn-outline-success">Logout</a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Home" asp-action="Login" class="btn btn-outline-success">Login</a>
+                        } *@
+
+                        <a class="btn btn-primary"> Login</a>
+                    </div>
                 </div>
             </div>
         </nav>
